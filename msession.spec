@@ -16,7 +16,7 @@ URL:		http://devel.mohawksoft.com/msession.html
 BuildRequires:	libstdc++-devel
 BuildRequires:	postgresql-devel
 BuildRequires:	unixODBC-devel
-Requires:	phoenix = %{version}
+Requires:	phoenix = %{_pver}
 Obsoletes:	msession-pgsql
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 ExclusiveArch:	%{ix86}
@@ -53,7 +53,7 @@ Summary(pl):	Pliki nag³ówkowe biblioteki phoenix
 Version:	%{_pver}
 License:	LGPL
 Group:		Development/Libraries
-Requires:	phoenix = %{version}
+Requires:	phoenix = %{_pver}
 
 %description -n phoenix-devel
 Header files for phoenix library.
@@ -67,7 +67,7 @@ Summary(pl):	Statyczna biblioteka phoenix
 Version:	%{_pver}
 License:	LGPL
 Group:		Development/Libraries
-Requires:	phoenix-devel = %{version}
+Requires:	phoenix-devel = %{_pver}
 
 %description -n phoenix-static
 Static version of phoenix library.
