@@ -3,7 +3,7 @@ Summary:	msession daemon - pseudo-database memory cache
 Summary(pl):	Demon msession - pseudo-bazodanowe cache
 Name:		msession
 Version:	030130
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://devel.mohawksoft.com/%{name}-%{version}.tar.gz
@@ -92,36 +92,32 @@ ln -sf Linux.mak config.mak
 	GCC="%{__cc} -DLINUX -DGCC -DPOSIX" \
 	CCOPT="%{rpmcflags}"
 
-make install
+%{__make} install
 rm -f *.o
 
 %{__make} phoenix.so \
 	GCC="%{__cc} -DLINUX -DGCC -DPOSIX" \
 	CCOPT="%{rpmcflags} -fPIC" \
-	LINK_DLL="%{__cc} -shared -Wl,-soname=libphoenix.so -lm -lpthread"
+	LINK_DLL="%{__cc} -shared -Wl -lm -lpthread" \
 
-cd ../msession
+cd -
 
-%{__make} \
+%{__make} -C msession \
 	GCC="%{__cc} -DLINUX -DGCC -DPOSIX" \
 	CCOPT="%{rpmcflags}"
 
-#%{__make} pgplug.so \
-#	GCC="%{__cc} -DLINUX -DGCC -DPOSIX" \
-#	CCOPT="%{rpmcflags}" \
-#	PGSQL_LIB="-lpq"
-	
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_libdir},%{_sbindir},%{_includedir}/phoenix}
 
 install lib/libphoenix.* $RPM_BUILD_ROOT%{_libdir}
+install src/phoenix.so $RPM_BUILD_ROOT%{_libdir}/libphoenix.so
 
-rm -f lib/{*tbl,mbitmap,metacore,mfamort,mfserial,misalpha,ndxfile,primes,unixcom}.h
-install lib/*.h $RPM_BUILD_ROOT%{_includedir}/phoenix
+install src/{[!bmpstu]*,m[!befi]*,memheap,metadef,mf[!as]*,session}.h \
+    $RPM_BUILD_ROOT%{_includedir}/phoenix
 
-install msession/msessiond $RPM_BUILD_ROOT%{_sbindir}
-install msession/{flexplug,fnplug,pgplug,protplug}.so $RPM_BUILD_ROOT%{_libdir}
+install msession/msession{d,rc} $RPM_BUILD_ROOT%{_sbindir}
+install msession/*.so $RPM_BUILD_ROOT%{_libdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -132,18 +128,16 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc msession/plugin.cpp msession/{PLUGINS,README}
-%attr(755,root,root) %{_sbindir}/msessiond
-%attr(755,root,root) %{_libdir}/flexplug.so
-%attr(755,root,root) %{_libdir}/fnplug.so
-%attr(755,root,root) %{_libdir}/protplug.so
+%attr(755,root,root) %{_sbindir}/msession*
+%attr(755,root,root) %{_libdir}/[!ls]*.so
 
 %files pgsql
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/pgplug.so
+%attr(755,root,root) %{_libdir}/sql*.so
 
 %files -n phoenix
 %defattr(644,root,root,755)
-%doc lib/README
+%doc src/README
 %attr(755,root,root) %{_libdir}/libphoenix.so
 
 %files -n phoenix-devel
