@@ -12,6 +12,7 @@ BuildRequires:	gcc-c++
 BuildRequires:	postgresql-devel
 Requires:	phoenix = %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+ExclusiveArch:	%{ix86}
 
 %description
 This is the msession daemon. It is a pseudo-database memory cache.
