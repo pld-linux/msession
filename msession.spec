@@ -6,7 +6,9 @@ Release:	2
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://www.mohawksoft.com/phoenix/%{name}-%{version}.tgz
+# Source0-md5:	069f31e9fac06dae39f528e2761a622f
 Source1:	http://www.mohawksoft.com/phoenix/phoenix-%{version}.tgz
+# Source1-md5:	f383419e2902acf0871215bbfb301b2c
 URL:		http://www.mohawksoft.com/phoenix/
 BuildRequires:	gcc-c++
 BuildRequires:	postgresql-devel
