@@ -9,6 +9,7 @@ License:	GPL
 Group:		Networking/Daemons
 #Source0Download:	http://devel.mohawksoft.com/downloads.html
 Source0:	http://devel.mohawksoft.com/%{name}-%{version}.tar.gz
+# Source0-md5: 68504332e95eca522f1aef59422b7e6c
 #Source1Download:	http://devel.mohawksoft.com/downloads.html
 Source1:	http://devel.mohawksoft.com/phoenix-%{ppfx}_%{_pver}.tar.gz
 Patch0:		%{name}-plugindir.patch
