@@ -2,7 +2,7 @@ Summary:	msession daemon - pseudo-database memory cache
 Summary(pl):	Demon msession - pseudo-bazodanowe cache
 Name:		msession
 Version:	020415
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://www.mohawksoft.com/phoenix/%{name}-%{version}.tgz
@@ -94,7 +94,7 @@ rm -f *.o
 %{__make} libphoenix.so \
 	GCC="%{__cc} -DLINUX -DGCC -DPOSIX" \
 	CCOPT="%{rpmcflags} -fPIC" \
-	LINK_DLL="%{__cc} -shared -Wl,-soname=libphoenix.so -lm"
+	LINK_DLL="%{__cc} -shared -Wl,-soname=libphoenix.so -lm -lpthread"
 
 cd ../msession
 
