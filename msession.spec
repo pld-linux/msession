@@ -1,15 +1,17 @@
+%define		_pver	030117
 Summary:	msession daemon - pseudo-database memory cache
 Summary(pl):	Demon msession - pseudo-bazodanowe cache
 Name:		msession
-Version:	020415
-Release:	2
+Version:	030130
+Release:	1
 License:	GPL
 Group:		Networking/Daemons
-Source0:	http://www.mohawksoft.com/phoenix/%{name}-%{version}.tgz
-Source1:	http://www.mohawksoft.com/phoenix/phoenix-%{version}.tgz
+Source0:	http://devel.mohawksoft.com/%{name}-%{version}.tar.gz
+Source1:	http://devel.mohawksoft.com/phoenix-%{_pver}.tar.gz
 URL:		http://www.mohawksoft.com/phoenix/
 BuildRequires:	gcc-c++
 BuildRequires:	postgresql-devel
+BuildRequires:	unixODBC-devel
 Requires:	phoenix = %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 ExclusiveArch:	%{ix86}
@@ -82,16 +84,18 @@ Statyczna wersja biblioteki phoenix.
 %setup -q -b1 -n phoenix
 
 %build
-cd lib
+mkdir lib
+cd src
 ln -sf Linux.mak config.mak
 
 %{__make} \
 	GCC="%{__cc} -DLINUX -DGCC -DPOSIX" \
 	CCOPT="%{rpmcflags}"
 
+make install
 rm -f *.o
 
-%{__make} libphoenix.so \
+%{__make} phoenix.so \
 	GCC="%{__cc} -DLINUX -DGCC -DPOSIX" \
 	CCOPT="%{rpmcflags} -fPIC" \
 	LINK_DLL="%{__cc} -shared -Wl,-soname=libphoenix.so -lm -lpthread"
@@ -102,10 +106,10 @@ cd ../msession
 	GCC="%{__cc} -DLINUX -DGCC -DPOSIX" \
 	CCOPT="%{rpmcflags}"
 
-%{__make} pgplug.so \
-	GCC="%{__cc} -DLINUX -DGCC -DPOSIX" \
-	CCOPT="%{rpmcflags}" \
-	PGSQL_LIB="-lpq"
+#%{__make} pgplug.so \
+#	GCC="%{__cc} -DLINUX -DGCC -DPOSIX" \
+#	CCOPT="%{rpmcflags}" \
+#	PGSQL_LIB="-lpq"
 	
 %install
 rm -rf $RPM_BUILD_ROOT
