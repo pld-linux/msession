@@ -6,9 +6,11 @@ Version:	030130
 Release:	2
 License:	GPL
 Group:		Networking/Daemons
+#Source0Download:	http://devel.mohawksoft.com/downloads.html
 Source0:	http://devel.mohawksoft.com/%{name}-%{version}.tar.gz
+#Source1Download:	http://devel.mohawksoft.com/downloads.html
 Source1:	http://devel.mohawksoft.com/phoenix-%{_pver}.tar.gz
-URL:		http://www.mohawksoft.com/phoenix/
+URL:		http://devel.mohawksoft.com/msession.html
 BuildRequires:	gcc-c++
 BuildRequires:	postgresql-devel
 BuildRequires:	unixODBC-devel
@@ -44,6 +46,7 @@ Summary:	phoenix - a library comprised of routines for various projects
 Summary(pl):	phoenix - biblioteka ze zbiorem procedur dla ró¿nych projektów
 License:	LGPL
 Group:		Libraries
+URL:		http://www.mohawksoft.com/devel/phoenix/
 
 %description -n phoenix
 This is phoenix, it is a library comprised of routines written for
