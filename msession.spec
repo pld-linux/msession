@@ -1,20 +1,23 @@
-%define		_pver	030117
+%define		_pver	030117E
+%define		ppfx	R1_2
 Summary:	msession daemon - pseudo-database memory cache
 Summary(pl):	Demon msession - pseudo-bazodanowe cache
 Name:		msession
 Version:	030130
-Release:	2
+Release:	2.1
 License:	GPL
 Group:		Networking/Daemons
 #Source0Download:	http://devel.mohawksoft.com/downloads.html
 Source0:	http://devel.mohawksoft.com/%{name}-%{version}.tar.gz
 #Source1Download:	http://devel.mohawksoft.com/downloads.html
-Source1:	http://devel.mohawksoft.com/phoenix-%{_pver}.tar.gz
+Source1:	http://devel.mohawksoft.com/phoenix-%{ppfx}_%{_pver}.tar.gz
+Patch0:		%{name}-plugindir.patch
 URL:		http://devel.mohawksoft.com/msession.html
-BuildRequires:	gcc-c++
+BuildRequires:	libstdc++-devel
 BuildRequires:	postgresql-devel
 BuildRequires:	unixODBC-devel
 Requires:	phoenix = %{version}
+Obsoletes:	msession-pgsql
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 ExclusiveArch:	%{ix86}
 
@@ -27,23 +30,10 @@ Ten pakiet zawiera demona msession. Udostêpnia on pseudo-bazodanowe
 cache przechowywane w pamiêci. Oryginalnie by³ projektowany w celu
 wspó³dzielenia danych przez wiele serwerów WWW.
 
-%package pgsql
-Summary:	PostgreSQL plugin for msession daemon
-Summary(pl):	Wtyczka PostgreSQL do demona msession
-Group:		Libraries
-Requires:	%{name} = %{version}
-
-%description pgsql
-This is a PostgreSQL function-only plugin that implements
-serialize and restore functionality for the flex plugin.
-
-%description pgsql -l pl
-To jest wtyczka funkcyjna PostgreSQL, implementuj±ca funkcjonalno¶æ
-serialize/restore dla wtyczki flex.
-
 %package -n phoenix
 Summary:	phoenix - a library comprised of routines for various projects
 Summary(pl):	phoenix - biblioteka ze zbiorem procedur dla ró¿nych projektów
+Version:	%{_pver}
 License:	LGPL
 Group:		Libraries
 URL:		http://www.mohawksoft.com/devel/phoenix/
@@ -60,6 +50,7 @@ napisanych dla ró¿nych projektów.
 %package -n phoenix-devel
 Summary:	Header files for phoenix library
 Summary(pl):	Pliki nag³ówkowe biblioteki phoenix
+Version:	%{_pver}
 License:	LGPL
 Group:		Development/Libraries
 Requires:	phoenix = %{version}
@@ -73,6 +64,7 @@ Pliki nag³ówkowe biblioteki phoenix.
 %package -n phoenix-static
 Summary:	Static phoenix library
 Summary(pl):	Statyczna biblioteka phoenix
+Version:	%{_pver}
 License:	LGPL
 Group:		Development/Libraries
 Requires:	phoenix-devel = %{version}
@@ -85,6 +77,7 @@ Statyczna wersja biblioteki phoenix.
 
 %prep
 %setup -q -b1 -n phoenix
+%patch -p1
 
 %build
 mkdir lib
@@ -92,35 +85,40 @@ cd src
 ln -sf Linux.mak config.mak
 
 %{__make} \
-	GCC="%{__cc} -DLINUX -DGCC -DPOSIX" \
+	GCC="%{__cxx} -DLINUX -DGCC -DPOSIX" \
 	CCOPT="%{rpmcflags}"
 
 %{__make} install
 rm -f *.o
 
 %{__make} phoenix.so \
-	GCC="%{__cc} -DLINUX -DGCC -DPOSIX" \
+	GCC="%{__cxx} -DLINUX -DGCC -DPOSIX" \
 	CCOPT="%{rpmcflags} -fPIC" \
-	LINK_DLL="%{__cc} -shared -Wl -lm -lpthread" \
+	LARGS="-Wl,-soname=libphoenix.so" \
+	CENDLIB="-lm -lpthread -lpq -lodbc"
+
+install phoenix.so ../lib/libphoenix.so
 
 cd -
 
 %{__make} -C msession \
-	GCC="%{__cc} -DLINUX -DGCC -DPOSIX" \
-	CCOPT="%{rpmcflags}"
+	GCC="%{__cxx} -DLINUX -DGCC -DPOSIX" \
+	CCOPT="%{rpmcflags}" \
+	CENDLIB="-L../lib -lphoenix"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_libdir},%{_sbindir},%{_includedir}/phoenix}
+install -d $RPM_BUILD_ROOT{%{_libdir}/msession,%{_sbindir},%{_includedir}/phoenix,%{_sysconfdir}}
 
 install lib/libphoenix.* $RPM_BUILD_ROOT%{_libdir}
-install src/phoenix.so $RPM_BUILD_ROOT%{_libdir}/libphoenix.so
 
 install src/{[!bmpstu]*,m[!befi]*,memheap,metadef,mf[!as]*,session}.h \
-    $RPM_BUILD_ROOT%{_includedir}/phoenix
+	$RPM_BUILD_ROOT%{_includedir}/phoenix
 
 install msession/msession{d,rc} $RPM_BUILD_ROOT%{_sbindir}
-install msession/*.so $RPM_BUILD_ROOT%{_libdir}
+install msession/*.so $RPM_BUILD_ROOT%{_libdir}/msession
+
+install msession/msessiond.cfg $RPM_BUILD_ROOT%{_sysconfdir}/msessiond.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -132,11 +130,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc msession/plugin.cpp msession/{PLUGINS,README}
 %attr(755,root,root) %{_sbindir}/msession*
-%attr(755,root,root) %{_libdir}/[!ls]*.so
-
-%files pgsql
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/sql*.so
+%dir %{_libdir}/msession
+%attr(755,root,root) %{_libdir}/msession/*.so
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/msessiond.conf
 
 %files -n phoenix
 %defattr(644,root,root,755)

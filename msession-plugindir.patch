@@ -1,0 +1,28 @@
+--- phoenix/src/mplugin.cpp.orig	Mon Dec 16 04:02:13 2002
++++ phoenix/src/mplugin.cpp	Wed Mar 12 20:41:48 2003
+@@ -122,6 +122,8 @@
+ 	return pfn;
+ }
+ 
++#define MPLUGINDIR "/usr/lib/msession/"
++
+ Boolean MPlugin::openlib(char *name)
+ {
+ 	m_dll = dlopen(name, RTLD_NOW);
+@@ -129,7 +131,15 @@
+ 	if(!m_dll)
+ 	{
+ 		char buffer[PATH_MAX];
+-		getcwd(buffer, sizeof(buffer));
++		if(strlen(MPLUGINDIR) + strlen(name) + 1) {
++			strcpy(buffer, MPLUGINDIR);
++			strcat(buffer, name);
++			m_dll = dlopen(buffer, RTLD_NOW);
++			if(m_dll)
++				return TRUE;
++		}
++		if(!getcwd(buffer, sizeof(buffer) - strlen(name) - 1))
++			return FALSE;
+ 		sprintf(&buffer[strlen(buffer)], "/%s", name);
+ 
+ 		m_dll = dlopen(buffer, RTLD_NOW);
