@@ -5,6 +5,7 @@ Summary(pl):	Demon msession - pseudo-bazodanowe cache
 Name:		msession
 Version:	030130
 Release:	2.1
+Epoch:		1
 License:	GPL
 Group:		Networking/Daemons
 #Source0Download:	http://devel.mohawksoft.com/downloads.html
