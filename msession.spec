@@ -119,8 +119,6 @@ install lib/*.h $RPM_BUILD_ROOT%{_includedir}/phoenix
 install msession/msessiond $RPM_BUILD_ROOT%{_sbindir}
 install msession/{flexplug,fnplug,pgplug,protplug}.so $RPM_BUILD_ROOT%{_libdir}
 
-gzip -9nf lib/README msession/{PLUGINS,README}
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -129,7 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc msession/*.gz msession/plugin.cpp
+%doc msession/plugin.cpp msession/{PLUGINS,README}
 %attr(755,root,root) %{_sbindir}/msessiond
 %attr(755,root,root) %{_libdir}/flexplug.so
 %attr(755,root,root) %{_libdir}/fnplug.so
@@ -141,7 +139,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n phoenix
 %defattr(644,root,root,755)
-%doc lib/*.gz
+%doc lib/README
 %attr(755,root,root) %{_libdir}/libphoenix.so
 
 %files -n phoenix-devel
