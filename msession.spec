@@ -19,7 +19,7 @@ URL:		http://devel.mohawksoft.com/msession.html
 BuildRequires:	libstdc++-devel
 BuildRequires:	postgresql-devel
 BuildRequires:	unixODBC-devel
-Requires:	phoenix = %{epoch}:%{_pver}
+Requires:	phoenix = %{epoch}:%{_pver}-%{release}
 Obsoletes:	msession-pgsql
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 ExclusiveArch:	%{ix86}
@@ -56,7 +56,7 @@ Summary(pl):	Pliki nag³ówkowe biblioteki phoenix
 Version:	%{_pver}
 License:	LGPL
 Group:		Development/Libraries
-Requires:	phoenix = %{epoch}:%{_pver}
+Requires:	phoenix = %{epoch}:%{_pver}-%{release}
 
 %description -n phoenix-devel
 Header files for phoenix library.
@@ -70,7 +70,7 @@ Summary(pl):	Statyczna biblioteka phoenix
 Version:	%{_pver}
 License:	LGPL
 Group:		Development/Libraries
-Requires:	phoenix-devel = %{epoch}:%{_pver}
+Requires:	phoenix-devel = %{epoch}:%{_pver}-%{release}
 
 %description -n phoenix-static
 Static version of phoenix library.
@@ -135,7 +135,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/msession*
 %dir %{_libdir}/msession
 %attr(755,root,root) %{_libdir}/msession/*.so
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/msessiond.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/msessiond.conf
 
 %files -n phoenix
 %defattr(644,root,root,755)
