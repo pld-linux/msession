@@ -4,7 +4,7 @@ Summary:	msession daemon - pseudo-database memory cache
 Summary(pl):	Demon msession - pseudo-bazodanowe cache
 Name:		msession
 Version:	030130
-Release:	2.1
+Release:	3
 Epoch:		1
 License:	GPL
 Group:		Networking/Daemons
@@ -15,6 +15,7 @@ Source0:	http://devel.mohawksoft.com/%{name}-%{version}.tar.gz
 Source1:	http://devel.mohawksoft.com/phoenix-%{ppfx}_%{_pver}.tar.gz
 # Source1-md5:	098704fa107d5199f2ea1ac3371c0fc3
 Patch0:		%{name}-plugindir.patch
+Patch1:		%{name}-gcc4.patch
 URL:		http://devel.mohawksoft.com/msession.html
 BuildRequires:	libstdc++-devel
 BuildRequires:	postgresql-devel
@@ -23,6 +24,8 @@ Requires:	phoenix = %{epoch}:%{_pver}-%{release}
 Obsoletes:	msession-pgsql
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 ExclusiveArch:	%{ix86}
+
+%define		specflags	-fno-strict-aliasing
 
 %description
 This is the msession daemon. It is a pseudo-database memory cache.
@@ -80,23 +83,24 @@ Statyczna wersja biblioteki phoenix.
 
 %prep
 %setup -q -b1 -n phoenix
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
-mkdir lib
+[ ! -d lib ] && mkdir lib
 cd src
 ln -sf Linux.mak config.mak
 
 %{__make} \
 	GCC="%{__cxx} -DLINUX -DGCC -DPOSIX" \
-	CCOPT="%{rpmcflags}"
+	CCOPT="%{rpmcxxflags}"
 
 %{__make} install
 rm -f *.o
 
 %{__make} phoenix.so \
 	GCC="%{__cxx} -DLINUX -DGCC -DPOSIX" \
-	CCOPT="%{rpmcflags} -fPIC" \
+	CCOPT="%{rpmcxxflags} -fPIC" \
 	LARGS="-Wl,-soname=libphoenix.so" \
 	CENDLIB="-lm -lpthread -lpq -lodbc"
 
@@ -106,7 +110,7 @@ cd -
 
 %{__make} -C msession \
 	GCC="%{__cxx} -DLINUX -DGCC -DPOSIX" \
-	CCOPT="%{rpmcflags}" \
+	CCOPT="%{rpmcxxflags}" \
 	CENDLIB="-L../lib -lphoenix"
 
 %install
