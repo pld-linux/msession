@@ -4,7 +4,7 @@ Summary:	msession daemon - pseudo-database memory cache
 Summary(pl):	Demon msession - pseudo-bazodanowe cache
 Name:		msession
 Version:	030130
-Release:	3
+Release:	4
 Epoch:		1
 License:	GPL
 Group:		Networking/Daemons
