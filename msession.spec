@@ -1,7 +1,7 @@
 %define		_pver	030117E
 %define		ppfx	R1_2
 Summary:	msession daemon - pseudo-database memory cache
-Summary(pl):	Demon msession - pseudo-bazodanowe cache
+Summary(pl.UTF-8):   Demon msession - pseudo-bazodanowe cache
 Name:		msession
 Version:	030130
 Release:	4
@@ -31,14 +31,14 @@ ExclusiveArch:	%{ix86}
 This is the msession daemon. It is a pseudo-database memory cache.
 It is was originally designed for multiple web servers to share data.
 
-%description -l pl
-Ten pakiet zawiera demona msession. Udostêpnia on pseudo-bazodanowe
-cache przechowywane w pamiêci. Oryginalnie by³ projektowany w celu
-wspó³dzielenia danych przez wiele serwerów WWW.
+%description -l pl.UTF-8
+Ten pakiet zawiera demona msession. UdostÄ™pnia on pseudo-bazodanowe
+cache przechowywane w pamiÄ™ci. Oryginalnie byÅ‚ projektowany w celu
+wspÃ³Å‚dzielenia danych przez wiele serwerÃ³w WWW.
 
 %package -n phoenix
 Summary:	phoenix - a library comprised of routines for various projects
-Summary(pl):	phoenix - biblioteka ze zbiorem procedur dla ró¿nych projektów
+Summary(pl.UTF-8):   phoenix - biblioteka ze zbiorem procedur dla rÃ³Å¼nych projektÃ³w
 Version:	%{_pver}
 License:	LGPL
 Group:		Libraries
@@ -49,13 +49,13 @@ This is phoenix, it is a library comprised of routines written for
 various projects. There is no underlying purpose or string that binds
 them together, it is just a collection of nifty routines.
 
-%description -n phoenix -l pl
-Ten pakiet zawiera phoenix - bibliotekê zawieraj±c± zbiór procedur
-napisanych dla ró¿nych projektów.
+%description -n phoenix -l pl.UTF-8
+Ten pakiet zawiera phoenix - bibliotekÄ™ zawierajÄ…cÄ… zbiÃ³r procedur
+napisanych dla rÃ³Å¼nych projektÃ³w.
 
 %package -n phoenix-devel
 Summary:	Header files for phoenix library
-Summary(pl):	Pliki nag³ówkowe biblioteki phoenix
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki phoenix
 Version:	%{_pver}
 License:	LGPL
 Group:		Development/Libraries
@@ -64,12 +64,12 @@ Requires:	phoenix = %{epoch}:%{_pver}-%{release}
 %description -n phoenix-devel
 Header files for phoenix library.
 
-%description -n phoenix-devel -l pl
-Pliki nag³ówkowe biblioteki phoenix.
+%description -n phoenix-devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki phoenix.
 
 %package -n phoenix-static
 Summary:	Static phoenix library
-Summary(pl):	Statyczna biblioteka phoenix
+Summary(pl.UTF-8):   Statyczna biblioteka phoenix
 Version:	%{_pver}
 License:	LGPL
 Group:		Development/Libraries
@@ -78,7 +78,7 @@ Requires:	phoenix-devel = %{epoch}:%{_pver}-%{release}
 %description -n phoenix-static
 Static version of phoenix library.
 
-%description -n phoenix-static -l pl
+%description -n phoenix-static -l pl.UTF-8
 Statyczna wersja biblioteki phoenix.
 
 %prep
