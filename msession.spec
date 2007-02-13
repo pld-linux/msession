@@ -1,7 +1,7 @@
 %define		_pver	030117E
 %define		ppfx	R1_2
 Summary:	msession daemon - pseudo-database memory cache
-Summary(pl.UTF-8):   Demon msession - pseudo-bazodanowe cache
+Summary(pl.UTF-8):	Demon msession - pseudo-bazodanowe cache
 Name:		msession
 Version:	030130
 Release:	4
@@ -38,7 +38,7 @@ współdzielenia danych przez wiele serwerów WWW.
 
 %package -n phoenix
 Summary:	phoenix - a library comprised of routines for various projects
-Summary(pl.UTF-8):   phoenix - biblioteka ze zbiorem procedur dla różnych projektów
+Summary(pl.UTF-8):	phoenix - biblioteka ze zbiorem procedur dla różnych projektów
 Version:	%{_pver}
 License:	LGPL
 Group:		Libraries
@@ -55,7 +55,7 @@ napisanych dla różnych projektów.
 
 %package -n phoenix-devel
 Summary:	Header files for phoenix library
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki phoenix
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki phoenix
 Version:	%{_pver}
 License:	LGPL
 Group:		Development/Libraries
@@ -69,7 +69,7 @@ Pliki nagłówkowe biblioteki phoenix.
 
 %package -n phoenix-static
 Summary:	Static phoenix library
-Summary(pl.UTF-8):   Statyczna biblioteka phoenix
+Summary(pl.UTF-8):	Statyczna biblioteka phoenix
 Version:	%{_pver}
 License:	LGPL
 Group:		Development/Libraries
