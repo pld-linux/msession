@@ -123,3 +123,13 @@ diff -uNrp phoenix.orig/src/unixgcc.mak phoenix/src/unixgcc.mak
  endif
  endif
  
+--- phoenix/src/mthread.cpp~	2002-11-18 01:56:55.000000000 +0100
++++ phoenix/src/mthread.cpp	2012-07-02 13:27:46.694451663 +0200
+@@ -25,6 +25,7 @@
+ #include "Phoenix.h"
+ #define THREAD(x)	((MThread*)(x))
+ #include <signal.h>
++#include <limits.h>
+ 
+ // All threads use this thunk.
+ THUNK_LANG THREAD_RET THUNK_DECL MThread::thunk(void *th)
